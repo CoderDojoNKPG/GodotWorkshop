@@ -1,0 +1,142 @@
+[gd_scene load_steps=17 format=3 uid="uid://bpfxjky31nh5f"]
+
+[ext_resource type="FontFile" uid="uid://smipb5dmdovi" path="res://NovaRound-Regular.ttf" id="1"]
+[ext_resource type="Texture2D" uid="uid://cw2rk6ncv2suw" path="res://icon.png" id="2"]
+[ext_resource type="Script" uid="uid://dfkmdp8ck7440" path="res://main.gd" id="3"]
+[ext_resource type="Script" uid="uid://cknhcrbniewa6" path="res://scripts/booos.gd" id="4"]
+[ext_resource type="Script" uid="uid://d2drbiw2xb22g" path="res://picks.gd" id="5"]
+[ext_resource type="PackedScene" uid="uid://dyndo7as8w4xi" path="res://actors/booo.tscn" id="6"]
+[ext_resource type="Script" uid="uid://i8f82f0khagn" path="res://player.gd" id="7"]
+[ext_resource type="PackedScene" path="res://actors/bullet.tscn" id="8"]
+[ext_resource type="Script" uid="uid://blubilk0gngji" path="res://scripts/draw.gd" id="9"]
+[ext_resource type="PackedScene" path="res://actors/pick.tscn" id="10"]
+
+[sub_resource type="Theme" id="1"]
+
+[sub_resource type="FontFile" id="2"]
+fallbacks = Array[Font]([ExtResource("1"), ExtResource("1")])
+subpixel_positioning = 0
+msdf_pixel_range = 14
+msdf_size = 128
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+
+[sub_resource type="Animation" id="5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="6"]
+resource_name = "player_anim"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1.5, 1.5), Vector2(1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4c57u"]
+_data = {
+&"RESET": SubResource("5"),
+&"player_anim": SubResource("6")
+}
+
+[sub_resource type="RectangleShape2D" id="4"]
+size = Vector2(60, 60)
+
+[node name="Main" type="Node2D"]
+script = ExtResource("3")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(1920, 1080)
+offset_right = 1920.0
+offset_bottom = 1080.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("1")
+color = Color(0.235294, 0.545098, 0.545098, 1)
+
+[node name="DebugLabel" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 9.0
+offset_top = 8.0
+offset_right = 384.0
+offset_bottom = 67.0
+theme_override_fonts/font = SubResource("2")
+text = "HELLO IN GAME"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Player/HurtSprite")
+libraries = {
+&"": SubResource("AnimationLibrary_4c57u")
+}
+
+[node name="Draw" type="Node2D" parent="."]
+script = ExtResource("9")
+
+[node name="Player" type="Area2D" parent="."]
+position = Vector2(788, 534)
+script = ExtResource("7")
+
+[node name="HurtSprite" type="Sprite2D" parent="Player"]
+modulate = Color(1, 0, 0, 1)
+texture = ExtResource("2")
+
+[node name="TheSprite" type="Sprite2D" parent="Player"]
+texture = ExtResource("2")
+
+[node name="PlayerCollisionShape" type="CollisionShape2D" parent="Player"]
+shape = SubResource("4")
+
+[node name="Picks" type="Node2D" parent="."]
+script = ExtResource("5")
+
+[node name="Pick" parent="Picks" instance=ExtResource("10")]
+position = Vector2(263, 529)
+
+[node name="Timer" type="Timer" parent="Picks"]
+wait_time = 3.0
+autostart = true
+
+[node name="Bullets" type="Node2D" parent="."]
+
+[node name="Bullet" parent="Bullets" instance=ExtResource("8")]
+
+[node name="Booos" type="Node2D" parent="."]
+script = ExtResource("4")
+
+[node name="Booo" parent="Booos" instance=ExtResource("6")]
+position = Vector2(1487, 514)
+
+[node name="Timer" type="Timer" parent="Booos"]
+wait_time = 4.0
+autostart = true
+
+[connection signal="gui_input" from="ColorRect" to="." method="_on_ColorRect_gui_input"]
+[connection signal="timeout" from="Picks/Timer" to="Picks" method="_on_timer_timeout"]
+[connection signal="area_entered" from="Booos/Booo" to="Player" method="_on_Booo_area_entered"]
+[connection signal="timeout" from="Booos/Timer" to="Booos" method="_on_timer_timeout"]
