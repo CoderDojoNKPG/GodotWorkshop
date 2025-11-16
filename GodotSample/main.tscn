@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bpfxjky31nh5f"]
+[gd_scene load_steps=16 format=3 uid="uid://bpfxjky31nh5f"]
 
 [ext_resource type="FontFile" uid="uid://smipb5dmdovi" path="res://NovaRound-Regular.ttf" id="1"]
 [ext_resource type="Texture2D" uid="uid://cw2rk6ncv2suw" path="res://icon.png" id="2"]
@@ -8,7 +8,6 @@
 [ext_resource type="PackedScene" uid="uid://dyndo7as8w4xi" path="res://actors/booo.tscn" id="6"]
 [ext_resource type="Script" uid="uid://i8f82f0khagn" path="res://player.gd" id="7"]
 [ext_resource type="PackedScene" path="res://actors/bullet.tscn" id="8"]
-[ext_resource type="Script" uid="uid://blubilk0gngji" path="res://scripts/draw.gd" id="9"]
 [ext_resource type="PackedScene" path="res://actors/pick.tscn" id="10"]
 
 [sub_resource type="Theme" id="1"]
@@ -23,6 +22,11 @@ cache/0/16/0/descent = 0.0
 cache/0/16/0/underline_position = 0.0
 cache/0/16/0/underline_thickness = 0.0
 cache/0/16/0/scale = 1.0
+cache/0/32/0/ascent = 0.0
+cache/0/32/0/descent = 0.0
+cache/0/32/0/underline_position = 0.0
+cache/0/32/0/underline_thickness = 0.0
+cache/0/32/0/scale = 1.0
 
 [sub_resource type="Animation" id="5"]
 length = 0.001
@@ -84,10 +88,16 @@ anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = 9.0
 offset_top = 8.0
-offset_right = 384.0
-offset_bottom = 67.0
+offset_right = 1917.0
+offset_bottom = 235.0
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_fonts/font = SubResource("2")
-text = "HELLO IN GAME"
+theme_override_font_sizes/font_size = 32
+text = "LYCKA TILL!
+"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Player/HurtSprite")
@@ -95,11 +105,8 @@ libraries = {
 &"": SubResource("AnimationLibrary_4c57u")
 }
 
-[node name="Draw" type="Node2D" parent="."]
-script = ExtResource("9")
-
 [node name="Player" type="Area2D" parent="."]
-position = Vector2(788, 534)
+position = Vector2(0, 540)
 script = ExtResource("7")
 
 [node name="HurtSprite" type="Sprite2D" parent="Player"]
@@ -116,7 +123,7 @@ shape = SubResource("4")
 script = ExtResource("5")
 
 [node name="Pick" parent="Picks" instance=ExtResource("10")]
-position = Vector2(263, 529)
+position = Vector2(960, 540)
 
 [node name="Timer" type="Timer" parent="Picks"]
 wait_time = 3.0
@@ -130,7 +137,7 @@ autostart = true
 script = ExtResource("4")
 
 [node name="Booo" parent="Booos" instance=ExtResource("6")]
-position = Vector2(1487, 514)
+position = Vector2(1920, 540)
 
 [node name="Timer" type="Timer" parent="Booos"]
 wait_time = 4.0
