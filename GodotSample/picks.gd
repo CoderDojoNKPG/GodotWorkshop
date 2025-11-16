@@ -5,6 +5,7 @@ const h = 1080
 var pick_scene: PackedScene = preload("res://actors/pick.tscn")
 
 func create_pick():
+	# Skapar en pickup som placeras på scenen på slumpad position
 	var instance = pick_scene.instantiate()
 	randomize()
 	var rand_w = randi() % w

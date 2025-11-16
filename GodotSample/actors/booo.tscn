@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://dyndo7as8w4xi"]
+[gd_scene load_steps=5 format=3 uid="uid://dyndo7as8w4xi"]
 
 [ext_resource type="Texture2D" uid="uid://cw2rk6ncv2suw" path="res://icon.png" id="1"]
 [ext_resource type="Script" uid="uid://brdbxdpfn1bpv" path="res://actors/booo.gd" id="2"]
+[ext_resource type="Script" uid="uid://blubilk0gngji" path="res://scripts/draw.gd" id="3_v7qys"]
 
 [sub_resource type="CircleShape2D" id="3"]
 radius = 32.0156
@@ -16,12 +17,17 @@ texture = ExtResource("1")
 [node name="BoooCollisionShape" type="CollisionShape2D" parent="."]
 shape = SubResource("3")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="ColorRect" type="ColorRect" parent="." groups=["booo"]]
 modulate = Color(0.145098, 0.396078, 0.611765, 0.376471)
 offset_left = -64.0
 offset_top = -64.0
 offset_right = 64.0
 offset_bottom = 64.0
 
+[node name="Draw" type="Node2D" parent="."]
+script = ExtResource("3_v7qys")
+
 [connection signal="area_entered" from="." to="." method="_on_Booo_area_entered"]
 [connection signal="gui_input" from="ColorRect" to="." method="_on_ColorRect_gui_input"]
+[connection signal="mouse_entered" from="ColorRect" to="." method="_on_color_rect_mouse_entered"]
+[connection signal="mouse_exited" from="ColorRect" to="." method="_on_color_rect_mouse_exited"]

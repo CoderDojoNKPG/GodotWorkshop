@@ -3,8 +3,9 @@ const w = 1920
 const h = 1080
 var booo_scene: PackedScene = preload("res://actors/booo.tscn")
 @onready var player = get_node("../Player")
-
+	
 func create_booo():
+	# Skapar en fiende som spawnas till scenen på slumpad postition
 	var instance = booo_scene.instantiate()
 	randomize()
 	var rand_w = randi() % w
