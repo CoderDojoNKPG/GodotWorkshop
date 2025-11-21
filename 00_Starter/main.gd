@@ -4,8 +4,8 @@ extends Node2D
 @onready var anim = get_node("AnimationPlayer")
 
 var player_speed = 400
-const w = 1920
-const h = 1080
+const w = 960
+const h = 540
 var pressed = false
 var pressed_position = Vector2(w/2,h/2)
 var game_over = false
@@ -20,12 +20,11 @@ func _on_ColorRect_gui_input(event):
 		elif event.pressed == false:
 			pressed = false
 
-func _process(delta):
+func _process(_delta):
 	if not game_over:
 		if pressed:
-			pressed_position = get_global_mouse_position()
+			player.goto = get_global_mouse_position()
 			
-		player.position  = player.position.move_toward(pressed_position, delta * player_speed)
 
 func damage_taken():
 	# När spelaren tar skada visar vi detta med en liten animation
