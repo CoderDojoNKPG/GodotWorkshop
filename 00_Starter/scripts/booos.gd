@@ -1,8 +1,8 @@
 extends Node2D
-const w = 1920
-const h = 1080
-
 @onready var player = get_node("../Player")
+
+@onready var  w = get_node("/root/Main").w
+@onready var h = get_node("/root/Main").h
 
 func create_booo():
 	pass
